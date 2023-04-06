@@ -14,15 +14,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./Dockerfile
-          push: false
-          tags: |
-            molero/jenkins-inbound-agent-docker:latest
-      - name: Tag and Push Docker Image to Docker Hub and GitHub Package Registry
+      - name: Build Docker image, Tag and Push Docker Image to Docker Hub
         uses: docker/build-push-action@v2
         with:
           context: .
@@ -30,4 +22,3 @@ jobs:
           push: true
           tags: |
             molero/jenkins-inbound-agent-docker:latest
-            docker.pkg.github.com/${{ github.repository }}/jenkins-inbound-agent-docker:latest
