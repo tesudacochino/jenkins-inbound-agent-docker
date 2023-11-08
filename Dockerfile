@@ -22,8 +22,8 @@ RUN chmod u+s /usr/bin/docker
 
 ENV JAVA_ARGS="-Djava.net.preferIPv4Stack=true"
 
-RUN mkdir -m 0755 -p /home/workspace
+RUN mkdir -m 0755 -p /home/workspace /home/tools
 RUN chown jenkins:jenkins /home/workspace
-RUN chown -R jenkins:jenkins /home/tools 
+RUN chown jenkins:jenkins /home/tools
 
 USER jenkins
