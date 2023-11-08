@@ -24,6 +24,6 @@ ENV JAVA_ARGS="-Djava.net.preferIPv4Stack=true"
 
 RUN mkdir -m 0755 -p /home/workspace
 RUN chown jenkins:jenkins /home/workspace
-RUN chown -R jenkins: /home/tools 
+RUN chown -R jenkins:jenkins /home/tools 
 
 USER jenkins
