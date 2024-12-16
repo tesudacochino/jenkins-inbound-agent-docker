@@ -1,4 +1,4 @@
-# jenkins-inbound-agent-docker
+# Jenkins-inbound-agent-docker
 This is a Docker image so that the Jenkins agent can generate containers and publish them.
 
 ## Create image
