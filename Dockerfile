@@ -24,21 +24,22 @@ RUN apt-get update && apt-get install -y \
       nodejs \
   && rm -rf /var/lib/apt/lists/*
 
-# Instalar Nix
-RUN curl -fsSL https://install.determinate.systems/nix | sh -s -- install linux \
-      --extra-conf "sandbox = false" \
-      --init none \
-      --no-confirm \
-  && echo 'export PATH="$PATH:/nix/var/nix/profiles/default/bin"' >> /etc/profile.d/nix.sh
-
-ENV PATH="${PATH}:/nix/var/nix/profiles/default/bin"
-ENV JAVA_ARGS="-Djava.net.preferIPv4Stack=true"
-
 # Permitir acceso a Docker dentro del contenedor
 RUN chmod u+s /usr/bin/docker
 
-# Crear directorios de trabajo
+# Crear directorios de trabajo y ajustar permisos
 RUN mkdir -p /home/workspace /home/tools \
   && chown -R jenkins:jenkins /home/workspace /home/tools
+
+# Instalar Nix como el usuario Jenkins (no-daemon mode)
+USER jenkins
+RUN curl -L https://nixos.org/nix/install | sh -s -- --no-daemon \
+  && echo '. "$HOME/.nix-profile/etc/profile.d/nix.sh"' >> ~/.bashrc
+
+# Añadir Nix al PATH
+ENV PATH="/home/jenkins/.nix-profile/bin:${PATH}"
+
+USER root
+ENV JAVA_ARGS="-Djava.net.preferIPv4Stack=true"
 
 USER jenkins
