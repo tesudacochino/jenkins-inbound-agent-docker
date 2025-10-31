@@ -13,7 +13,7 @@ RUN echo \
   "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
    tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-RUN curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate
+RUN curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate --no-confirm
 
 RUN apt-get update
 
